@@ -5,6 +5,8 @@ import java.util.*;
 public class Generator {
   static Random ran = new Random();
 
+  static final String PROMPT_INPUT_MESSAGE = "Enter number of bit: ";
+
   private static int _getRandomBit() {
     return ran.nextInt(2);
   }
@@ -27,7 +29,7 @@ public class Generator {
 
   public static BigInteger getInputBignumberByBitLength() {
 
-    System.out.print("enter number of bit: ");
+    System.out.print(PROMPT_INPUT_MESSAGE);
 
     Scanner scanner = Scan.getScanner();
     int bitLength = scanner.nextInt();
@@ -37,11 +39,26 @@ public class Generator {
 
   public static BigInteger getInputBignumberByBitLength2() {
 
-    System.out.print("enter number of bit: ");
+    System.out.print(PROMPT_INPUT_MESSAGE);
 
     Scanner scanner = Scan.getScanner();
     int bitLength = scanner.nextInt();
 
     return Generator.genNumPure(bitLength);
+  }
+
+  public static BigInteger generatePrimeNumber(int bitLength) {
+
+    return BigInteger.probablePrime(bitLength, Generator.ran);
+  }
+
+  public static BigInteger getAndGeneratePrimeNumber() {
+
+    System.out.print(PROMPT_INPUT_MESSAGE);
+
+    Scanner scanner = Scan.getScanner();
+    int bitLength = scanner.nextInt();
+
+    return Generator.generatePrimeNumber(bitLength);
   }
 }
