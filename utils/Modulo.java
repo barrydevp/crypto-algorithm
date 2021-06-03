@@ -92,13 +92,13 @@ public class Modulo {
     if(arr1[0].equals(arr2[0]) && arr1[1].equals(arr2[1])) {
       if (arr1[1].multiply(BigInteger.TWO).mod(n).equals(BigInteger.ZERO))
         return new BigInteger[]{BigInteger.ZERO, BigInteger.ZERO};
-      BigInteger y = Modulo.calcInverseNumber(n, arr1[1].multiply(BigInteger.TWO));
+      BigInteger y = Modulo.calcInverseNumber(arr1[1].multiply(BigInteger.TWO), n);
 
       lam = arr1[0].multiply(arr1[0]).multiply(BigInteger.valueOf(3)).add(a).multiply(y);
     } else {
       if(x.equals(BigInteger.ZERO))
         return new BigInteger[]{BigInteger.ZERO, BigInteger.ZERO};
-      BigInteger _x = Modulo.calcInverseNumber(n, x);
+      BigInteger _x = Modulo.calcInverseNumber(x, n);
       lam = arr2[1].subtract(arr1[1]).multiply(_x);
     }
 

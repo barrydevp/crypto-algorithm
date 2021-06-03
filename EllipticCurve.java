@@ -14,7 +14,9 @@ public class EllipticCurve {
     BigInteger[] P = {new BigInteger("b70e0cbd6bb4bf7f321390b94a03c1d356c21122343280d6115c1d21", 16), new BigInteger("bd376388b5f723fb4c22dfe6cd4375a05a07476444d5819985007e34", 16)};
     BigInteger[] B = Modulo.ellipticMul(P, s, n, a);
 
-    BigInteger[] M = Modulo.ellipticMul(P, new BigInteger("29012000"), n, a);
+    System.out.print("Mời nhập bản tin bí mật x để thực hiện tính xP = M: ");
+    BigInteger x = new BigInteger("" + Scan.getScanner().nextInt());
+    BigInteger[] M = Modulo.ellipticMul(P, x, n, a);
     BigInteger k = Generator.generatePrimeNumber(20);
 
     System.out.print("\n\n==========\n\n");
