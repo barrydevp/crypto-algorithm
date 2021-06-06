@@ -3,7 +3,7 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class Generator {
-  static Random ran = new Random();
+  public static Random ran = new Random();
 
   static final String PROMPT_INPUT_MESSAGE = "Enter number of bit: ";
 

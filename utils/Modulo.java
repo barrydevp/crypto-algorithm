@@ -19,7 +19,7 @@ public class Modulo {
 
     while (!b.equals(BigInteger.ZERO)) {
       BigInteger q = a.divide(b);
-      BigInteger r = a.subtract(q.multiply(b));
+      BigInteger r = a.remainder(b);
       a = b;
       b = r;
 
@@ -36,13 +36,50 @@ public class Modulo {
     return xa.compareTo(BigInteger.ZERO) < 0 ? originalB.add(xa): xa;
   }
 
-  public static void Test_calcInverseNumber() {
+  public static void test() {
     BigInteger a = new BigInteger("13");
     BigInteger b = new BigInteger("5");
 
     // expected number: 2
     System.out.println(Modulo.calcInverseNumber(a, b).toString());
     
+  }
+
+  public static boolean isPrime(BigInteger p) {
+    return p.isProbablePrime(30);
+  }
+
+  public static BigInteger genSafePrime(int bitLength) {
+    BigInteger p;
+
+    // int count = 0;
+    while(!Modulo.isPrime((p = Generator.generatePrimeNumber(bitLength)).subtract(BigInteger.ONE).divide(BigInteger.TWO))) {
+      // System.out.println(++count);
+    }
+
+    return p;
+  }
+
+  public static BigInteger getPrimitiveRootFromSafePrime(BigInteger safePrime) {
+    BigInteger root = BigInteger.TWO;
+    BigInteger factor = safePrime.subtract(BigInteger.ONE).divide(BigInteger.TWO);
+
+    while(root.modPow(factor, safePrime).equals(BigInteger.ONE)) {
+      root = root.add(BigInteger.ONE);
+    }
+
+    return root;
+  }
+
+  public static VirtualElGamalKey genVirtualElGamalKey(BigInteger p) {
+    BigInteger seed = new BigInteger("2");
+    BigInteger q;
+
+    while(!Modulo.isPrime((q = p.multiply(seed).add(BigInteger.ONE)))) {
+      seed = seed.add(BigInteger.TWO);
+    }
+    
+    return new VirtualElGamalKey(p, q, seed);
   }
 
   public static BigInteger primaryRoot(BigInteger p) {
@@ -68,15 +105,15 @@ public class Modulo {
     BigInteger left = BigInteger.TWO;
     BigInteger cloneP = p;
     while(left.compareTo(p) <= 0) {
-      boolean check = true;
+      boolean next = true;
       BigInteger result = left;
 
-      for(int index=0; index < divisors.size() && check; ++index) {
+      for(int index=0; index < divisors.size() && next; ++index) {
         BigInteger exp = phi.divide(divisors.get(index));
-        check &= (!result.modPow(exp, cloneP).equals(BigInteger.ONE));
+        next &= (!result.modPow(exp, cloneP).equals(BigInteger.ONE));
       }
 
-      if(check) {
+      if(next) {
         return result;
       }
     }
